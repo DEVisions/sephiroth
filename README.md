@@ -94,12 +94,12 @@ It is recommended to install sephiroth into its own virtual environment using a 
 pipx install sephiroth
 ```
 
-You can also get the always-latest updates by cloning directly from the repository, however this installation requires setting up pipenv to install the dependencies needed.
+You can also get the always-latest updates by cloning directly from the repository, however this installation requires setting up uv to install the dependencies needed.
 
 ```bash
 git clone https://github.com/0xdade/sephiroth.git
 cd sephiroth
-pipenv install .
+uv sync
 ```
 
 ### Docker
