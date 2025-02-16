@@ -15,8 +15,8 @@ import sephiroth
 supported_servers = ["nginx", "apache", "caddy", "iptables", "ip6tables"]
 
 base_dir = os.path.dirname(__file__)
-template_dir = os.path.join(base_dir, "sephiroth", "templates")
-output_dir = os.path.join(os.getcwd(), "output")
+template_dir = os.path.join(base_dir, "templates")
+output_dir = os.path.join(os.getcwd())
 
 
 def get_output_path(servertype, targets, build_date):
@@ -26,7 +26,7 @@ def get_output_path(servertype, targets, build_date):
     """
     targets_str = "_".join(targets)
     fdate = build_date.strftime("%Y-%m-%d_%H%M%S")
-    fname = f"{fdate}_{servertype}_{targets_str}.conf"
+    fname = f"{fdate}_{servertype}_{targets_str}.sephiroth.conf"
     return os.path.join(output_dir, fname)
 
 
