@@ -1,7 +1,5 @@
 FROM python:3.9.6-alpine3.14
 
-LABEL gitrepo="https://github.com/0xdade/sephiroth"
-
 # Build:
 # docker build --tag=sephiroth .
 
