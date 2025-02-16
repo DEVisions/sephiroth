@@ -1,6 +1,8 @@
-import requests
-from sephiroth.providers.base_provider import BaseProvider
 from typing import TypedDict
+
+import requests
+
+from sephiroth.providers.base_provider import BaseProvider
 
 
 class VultrIPRange(TypedDict):

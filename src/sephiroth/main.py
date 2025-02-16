@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 
 import argparse
-from datetime import datetime
 import os
-from datetime import timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 from jinja2 import Template
 
-from sephiroth.providers import Provider
-from sephiroth.providers.provider import supported_targets
 import sephiroth
+from sephiroth.providers import Provider, supported_targets
 
 supported_servers = ["nginx", "apache", "caddy", "iptables", "ip6tables"]
 
@@ -73,9 +71,10 @@ def print_output(servertype, targets, outfile):
     helpfile = os.path.join(template_dir, servertype, "help.jinja")
     abspath = os.path.abspath(outfile)
     targets_str = ", ".join(targets)
-    help_text = Template(open(helpfile).read()).render(
-        abspath=abspath, outfile=os.path.basename(outfile)
-    )
+    with open(helpfile) as f:
+        help_text = Template(f.read()).render(
+            abspath=abspath, outfile=os.path.basename(outfile)
+        )
     print(f"Your {servertype} blocklist for {targets_str} can be found at {outfile}\n")
     print(help_text)
 
@@ -96,7 +95,7 @@ def validate_apache_args(args):
     if args.redir_target is None:
         print("[!] Error: Apache requires a defined redirect target using -r")
         raise SystemExit
-    elif args.redir_target.startswith("http://") or args.redir_target.startswith(
+    if args.redir_target.startswith("http://") or args.redir_target.startswith(
         "https://"
     ):
         print(

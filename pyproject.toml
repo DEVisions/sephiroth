@@ -46,3 +46,32 @@ packages = ["src/sephiroth"]
 
 [tool.hatch.version]
 path = "src/sephiroth/__init__.py"
+
+[tool.ruff.lint]
+select = [
+  # flake8-bugbear
+  "B",
+  # flake8-comprehensions
+  "C4",
+  # pyflakes
+  "F",
+  # flynt
+  "FLY",
+  # isort
+  "I",
+  # pylint
+  "PL",
+  # flake8-return
+  "RET",
+  # Ruff's own rules
+  "RUF",
+  # flake8-simplify
+  "SIM",
+  # flake8-tidy-imports
+  "TID",
+  # pyupgrade
+  "UP"
+]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"

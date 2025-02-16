@@ -1,5 +1,6 @@
-from csv import DictReader
 import io
+from csv import DictReader
+
 import requests
 
 from sephiroth.providers.base_provider import BaseProvider
@@ -36,7 +37,7 @@ class Linode(BaseProvider):
             if address["prefix"].startswith("# Last modified"):
                 header_comments.append(f"(linode) {address['prefix'][2:]}")
                 continue
-            elif address["prefix"].startswith("#"):
+            if address["prefix"].startswith("#"):
                 continue
             item = {
                 "range": address["prefix"],

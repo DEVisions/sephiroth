@@ -1,6 +1,7 @@
-import requests
 import io
 from csv import DictReader
+
+import requests
 
 from sephiroth.providers.base_provider import BaseProvider
 

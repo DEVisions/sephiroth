@@ -1,4 +1,5 @@
 import os
+
 from sephiroth.providers.base_provider import BaseProvider
 
 
@@ -15,7 +16,7 @@ class File(BaseProvider):
         ranges = {}
         print(f"(file) Reading IP ranges from {len(target_files)} files")
         for infile in target_files:
-            with open(infile, "r") as f:
+            with open(infile) as f:
                 ranges[os.path.basename(infile)] = f.readlines()
         return ranges
 
