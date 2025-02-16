@@ -7,42 +7,7 @@ A Python3 script to build cloud block lists for servers.
 [![Contributors](https://img.shields.io/github/contributors/0xdade/sephiroth.svg)](https://github.com/0xdade/sephiroth/graphs/contributors)
 [![License](https://img.shields.io/github/license/0xdade/sephiroth?style=flat)](LICENSE)
 [![Docker Downloads](https://img.shields.io/docker/pulls/0xdade/sephiroth?label=docker%20pulls&logo=docker)](https://hub.docker.com/repository/docker/0xdade/sephiroth)
-[![Maintainability](https://api.codeclimate.com/v1/badges/1afce4010968d7133400/maintainability)](https://codeclimate.com/github/0xdade/sephiroth/maintainability)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
-
-## Requirements
-
-* Python 3.6+
-
-## Setup
-
-
-### Python
-It is recommended to install sephiroth into a virtual environment. From a brand new Ubuntu 18.04 machine, the setup flow should look something like this:
-
-```bash
-sudo apt-get install python3 python3-pip && python -m pip install pipenv
-mkdir sephiroth && cd sephiroth
-pipenv install sephiroth
-```
-
-You can also get the always-latest updates by cloning directly from the repository.
-
-```bash
-git clone https://github.com/0xdade/sephiroth.git
-cd sephiroth
-pipenv install .
-```
-
-### Docker
-
-Alternatively, we provide a [Dockerfile](/Dockerfile) with build and run instructions, or you can fetch the latest version from [dockerhub](https://hub.docker.com/r/0xdade/sephiroth):
-
-```bash
-docker pull 0xdade/sephiroth
-docker run --rm -v $(pwd):/app/output sephiroth -s nginx -t gcp
-```
 
 ## Usage
 
@@ -51,7 +16,7 @@ Sephiroth provides a built in help menu through the use of Python's argparse lib
 ```bash
 sephiroth on  master [!] on 🐳 v19.03.12 via sephiroth via 🐍 3.8.3
 ➜ sephiroth --help
-usage: Sephiroth [-h] -s {nginx,apache,iptables,ip6tables} -t {aws,azure,gcp,oci,asn,file,tor,do,linode,cloudflare} [-a ASN] [-f FILENAME] [-r REDIR_TARGET] [-p] [--no-ipv6] [--compacted] [-V]
+usage: Sephiroth [-h] -s {nginx,apache,caddy,iptables,ip6tables} -t {aws,azure,gcp,oci,asn,file,tor,do,linode,cloudflare} [-a ASN] [-f FILENAME] [-r REDIR_TARGET] [-p] [--no-ipv6] [--compacted] [-V]
 
 Sephiroth is made to help block clouds.
 
@@ -118,6 +83,34 @@ While Sephiroth began as a cloud blocking script, it became apparent that there 
 * `do` - Digital Ocean. Fetched from `google.csv` as documented on the [Platform page](https://www.digitalocean.com/docs/platform/).
 * `linode` - Linode. Fetched from [geoip.linode.com](https://geoip.linode.com)
 * `cloudflare` - Cloudflare. Fetched from [documented API](https://developers.cloudflare.com/api/operations/cloudflare-i-ps-cloudflare-ip-details)
+
+## Setup
+
+
+### Python
+It is recommended to install sephiroth into its own virtual environment using a tool like `pipx`.
+
+```bash
+pipx install sephiroth
+```
+
+You can also get the always-latest updates by cloning directly from the repository, however this installation requires setting up pipenv to install the dependencies needed.
+
+```bash
+git clone https://github.com/0xdade/sephiroth.git
+cd sephiroth
+pipenv install .
+```
+
+### Docker
+
+Alternatively, we provide a [Dockerfile](/Dockerfile) with build and run instructions, or you can fetch the latest version from [dockerhub](https://hub.docker.com/r/0xdade/sephiroth):
+
+```bash
+docker pull 0xdade/sephiroth
+docker run --rm -v $(pwd):/app/output sephiroth -s nginx -t gcp
+```
+
 
 ## Acknowledgements
 
