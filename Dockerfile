@@ -8,13 +8,16 @@ LABEL gitrepo="https://github.com/0xdade/sephiroth"
 # Run:
 # docker run --rm -v $(pwd):/app/output sephiroth -s nginx -t aws
 
+COPY --from=ghcr.io/astral-sh/uv:0.6.0 /uv /uvx /bin/
+
 WORKDIR /app
-COPY LICENSE Pipfile Pipfile.lock /app/
-RUN pip install --no-cache-dir pipenv \
-    && PIPENV_VENV_IN_PROJECT=1 pipenv sync
-
-COPY sephiroth/ /app/sephiroth
-COPY Sephiroth.py .
-
-VOLUME /app/output
-ENTRYPOINT [ "pipenv", "run", "python", "Sephiroth.py"]
+COPY LICENSE /app/
+COPY src/ /app/src/
+RUN \
+    --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
+    --mount=type=bind,source=uv.lock,target=/app/uv.lock \
+    --mount=type=bind,source=README.md,target=/app/README.md \
+    --mount=type=cache,target=/root/.cache \
+    uv sync --frozen
+VOLUME "/app/output"
+ENTRYPOINT [ "uv", "run", "sephiroth", "--output-dir", "/app/output"]

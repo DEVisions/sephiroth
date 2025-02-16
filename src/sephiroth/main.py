@@ -16,18 +16,18 @@ supported_servers = ["nginx", "apache", "caddy", "iptables", "ip6tables"]
 
 base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, "templates")
-output_dir = os.path.join(os.getcwd())
 
 
-def get_output_path(servertype, targets, build_date):
+def get_output_path(args, build_date):
     """
     Input: Server type, date from build_template(), cloud provider
     Output: Path to file on disk to write to
     """
-    targets_str = "_".join(targets)
+    targets_str = "_".join(args.targets)
     fdate = build_date.strftime("%Y-%m-%d_%H%M%S")
-    fname = f"{fdate}_{servertype}_{targets_str}.sephiroth.conf"
-    return os.path.join(output_dir, fname)
+    fname = f"{fdate}_{args.servertype}_{targets_str}.sephiroth.conf"
+    Path(args.output_dir).mkdir(exist_ok=True)
+    return os.path.join(args.output_dir, fname)
 
 
 def get_ranges(selected_provider, excludeip6=False, targets_in=None, compacted=False):
@@ -193,6 +193,13 @@ def parse_args():
         dest="compacted",
     )
     parser.add_argument(
+        "-o",
+        "--output-dir",
+        help="Specify an output dir",
+        default=os.getcwd(),
+        dest="output_dir",
+    )
+    parser.add_argument(
         "-V", "--version", action="version", version="%(prog)s " + sephiroth.__version__
     )
     return parser.parse_args()
@@ -266,9 +273,7 @@ def main():
     template_output = build_template(
         template_vars, template, build_date, args.use_proxy, args.redir_target
     )
-    outfile = get_output_path(args.servertype, args.targets, build_date)
-    if not Path(output_dir).exists():
-        Path(output_dir).mkdir()
+    outfile = get_output_path(args, build_date)
     with open(outfile, "w") as o:
         o.write(template_output)
 
