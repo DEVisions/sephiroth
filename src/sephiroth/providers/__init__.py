@@ -8,6 +8,7 @@ from sephiroth.providers.tor import Tor
 from sephiroth.providers.do import DO
 from sephiroth.providers.linode import Linode
 from sephiroth.providers.cloudflare import Cloudflare
+from sephiroth.providers.vultr import Vultr
 
 # This must be imported last, circular dependencies and all that
 from sephiroth.providers.provider import Provider
@@ -24,4 +25,5 @@ __all__ = [
     "Linode",
     "Provider",
     "Cloudflare",
+    "Vultr",
 ]

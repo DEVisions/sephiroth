@@ -9,6 +9,7 @@ from sephiroth.providers import (
     DO,
     Linode,
     Cloudflare,
+    Vultr,
 )
 
 classmap = {
@@ -22,6 +23,7 @@ classmap = {
     "do": DO,
     "linode": Linode,
     "cloudflare": Cloudflare,
+    "vultr": Vultr,
 }
 
 
