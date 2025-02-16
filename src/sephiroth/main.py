@@ -9,7 +9,7 @@ from pathlib import Path
 from jinja2 import Template
 
 from sephiroth.providers import Provider
-from sephiroth.providers.provider import classmap as supported_targets
+from sephiroth.providers.provider import supported_targets
 import sephiroth
 
 supported_servers = ["nginx", "apache", "caddy", "iptables", "ip6tables"]
@@ -231,15 +231,31 @@ def main():
         server_validators[args.servertype](args)
     build_date = datetime.now(timezone.utc)
     template_vars = {"header_comments": [], "ranges": []}
-    for provider in args.targets:
+    if "_all" in args.targets:
+        """
+        _all can't be referenced as a provider because it's a meta target
+        """
+        excluded_from_all = {
+            "_all",
+        }
+        targets = [t for t in supported_targets if t not in excluded_from_all]
+    else:
+        targets = args.targets
+    for provider in targets:
         if args.asns and provider == "asn":
             provider_vars = get_ranges(
                 provider, excludeip6=args.excludeip6, targets_in=args.asns
             )
         elif args.files and provider == "file":
+            print(f"{args.files=}")
             provider_vars = get_ranges(
                 provider, excludeip6=args.excludeip6, targets_in=args.files
             )
+        elif provider in {"file", "asn"}:
+            """
+            If provider is file or asn but args.asns or args.files is empty, skip it
+            """
+            continue
         else:
             provider_vars = get_ranges(
                 provider, excludeip6=args.excludeip6, compacted=args.compacted

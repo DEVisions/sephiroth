@@ -1,3 +1,5 @@
+from netaddr import IPNetwork, IPSet
+
 from sephiroth.providers import (
     AWS,
     Azure,
@@ -26,6 +28,8 @@ classmap = {
     "vultr": Vultr,
 }
 
+supported_targets = list(classmap.keys()) + ["_all"]
+
 
 class Provider:
     def __init__(self, provider, targets_in=None):
@@ -38,8 +42,6 @@ class Provider:
         return self.provider.get_processed_ranges()
 
     def get_compacted_ranges(self):
-        from netaddr import IPNetwork, IPSet
-
         processed = self.provider.get_processed_ranges()
         networks = [IPNetwork(cidr["range"]) for cidr in processed["ranges"]]
         compacted = [
