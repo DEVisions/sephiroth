@@ -1,4 +1,15 @@
-from sephiroth.providers import AWS, Azure, GCP, OCI, ASN, File, Tor, DO, Linode, Cloudflare
+from sephiroth.providers import (
+    AWS,
+    Azure,
+    GCP,
+    OCI,
+    ASN,
+    File,
+    Tor,
+    DO,
+    Linode,
+    Cloudflare,
+)
 
 classmap = {
     "aws": AWS,

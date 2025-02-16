@@ -36,10 +36,7 @@ class Cloudflare(BaseProvider):
 
         for range_type, comment in range_types:
             for ip_range in ip_ranges[range_type]:
-                item = {
-                    "range": ip_range,
-                    "comment": comment
-                }
+                item = {"range": ip_range, "comment": comment}
                 out_ranges.append(item)
 
         return {"header_comments": header_comments, "ranges": out_ranges}

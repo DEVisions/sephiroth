@@ -1,18 +1,13 @@
+[packages]
+Jinja2 = "~=3.1.1"
+beautifulsoup4 = "~=4.11.1"
+netaddr = "*"
+requests = "~=2.27.1"
+
+[requires]
+python_version = "3.9"
+
 [[source]]
 name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-
-[dev-packages]
-setuptools = "*"
-wheel = "*"
-twine = "*"
-
-[packages]
-beautifulsoup4 = "~=4.11.1"
-requests = "~=2.27.1"
-Jinja2 = "~=3.1.1"
-netaddr = "*"
-
-[requires]
-python_version = "3.9"
